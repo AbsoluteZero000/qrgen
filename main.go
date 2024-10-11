@@ -4,11 +4,10 @@ import (
 	"fmt"
 )
 
-// Function to render the QR code in the terminal
-func renderQRCode(qr [][]int) {
+func renderQRCode(qr [][]bool) {
 	for _, row := range qr {
 		for _, col := range row {
-			if col == 1 {
+			if col == true {
 				fmt.Print("██")
 			} else {
 				fmt.Print("  ")
@@ -19,14 +18,14 @@ func renderQRCode(qr [][]int) {
 }
 
 func main() {
-	qrCode := [][]int{
-		{1, 1, 1, 1, 1, 1, 1},
-		{1, 0, 0, 0, 0, 0, 1},
-		{1, 0, 1, 1, 1, 0, 1},
-		{1, 0, 1, 1, 1, 0, 1},
-		{1, 0, 1, 1, 1, 0, 1},
-		{1, 0, 0, 0, 0, 0, 1},
-		{1, 1, 1, 1, 1, 1, 1},
+	qrCode := [][]bool{
+		{true, true, true, true, true, true, true},
+		{true, true, false, true, false, true, true},
+		{true, true, true, true, true, true, true},
+		{true, false, true, true, true, false, true},
+		{true, false, true, true, true, false, true},
+		{true, false, false, false, false, false, true},
+		{true, true, true, true, true, true, true},
 	}
 
 	renderQRCode(qrCode)
