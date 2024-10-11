@@ -4,13 +4,27 @@ import (
 	"fmt"
 )
 
-func renderQRCode(qr [][]bool) {
+type color int
+
+const (
+	uncolored color = iota
+	white
+	black
+)
+
+const (
+	blackColor   = "\033[38;2;0;0;0m"
+	whiteColor   = "\033[97m"
+	defaultColor = "\033[0m"
+)
+
+func renderQRCode(qr [][]color) {
 	for _, row := range qr {
 		for _, col := range row {
-			if col == true {
-				fmt.Print("██")
+			if col == white {
+				fmt.Printf(whiteColor + "██" + defaultColor)
 			} else {
-				fmt.Print("  ")
+				fmt.Printf(blackColor + "██" + defaultColor)
 			}
 		}
 		fmt.Println()
@@ -18,14 +32,14 @@ func renderQRCode(qr [][]bool) {
 }
 
 func main() {
-	qrCode := [][]bool{
-		{true, true, true, true, true, true, true},
-		{true, true, false, true, false, true, true},
-		{true, true, true, true, true, true, true},
-		{true, false, true, true, true, false, true},
-		{true, false, true, true, true, false, true},
-		{true, false, false, false, false, false, true},
-		{true, true, true, true, true, true, true},
+	qrCode := [][]color{
+		{white, white, white, white, white, white, white},
+		{white, white, black, white, black, white, white},
+		{white, white, white, white, white, white, white},
+		{white, black, white, white, white, black, white},
+		{white, black, white, white, white, black, white},
+		{white, black, black, black, black, black, white},
+		{white, white, white, white, white, white, white},
 	}
 
 	renderQRCode(qrCode)
