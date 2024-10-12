@@ -96,34 +96,30 @@ func addHeaders(data string, qrcode *qrcode) {
 
 }
 
-func addEncoding(datatype string, qrcode *qrcode) {
+func addData(data string, qrcode *qrcode) {
 	qrSize := len(qrcode.data)
+
+	// set type to binary encoding
 	qrcode.data[qrSize-1][qrSize-1] = white
 	qrcode.data[qrSize-1][qrSize-2] = black
 	qrcode.data[qrSize-2][qrSize-1] = white
-	qrcode.data[qrSize-2][qrSize-2] = white
-}
+	qrcode.data[qrSize-2][qrSize-2] = black
 
-func addLength(dataLength int, qrcode *qrcode) {
-	qrSize := len(qrcode.data)
-	counter := 7
+	// set size byte to the length of data
+	length := byte(len(data))
 
+	counter := 0
 	for i := 0; i < 4; i++ {
 		for j := 0; j < 2; j++ {
-			if (dataLength & (1 << counter)) > 0 {
-				qrcode.data[qrSize-3-i][qrSize-j-1] = black
+			if length>>{
+				qrcode.data[qrSize-4-i][qrSize-j-1] = black
 			} else {
-				qrcode.data[qrSize-3-i][qrSize-j-1] = white
+				qrcode.data[qrSize-4-i][qrSize-j-1] = black
 			}
-			counter--
 		}
 	}
-}
-
-func addData(data string, qrcode *qrcode) {
 
 }
-
 func NewQrCode(data string) qrcode {
 	qrCodeSize := 25
 	qrcode := qrcode{
@@ -147,10 +143,6 @@ func NewQrCode(data string) qrcode {
 
 	// Add useless dot
 	qrcode.data[len(qrcode.data)-8][8] = black
-
-	addEncoding("binary", &qrcode)
-
-	addLength(len(data), &qrcode)
 
 	addData(data, &qrcode)
 
