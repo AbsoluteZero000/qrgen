@@ -57,6 +57,17 @@ func addAlignmentPattern(qrcode *qrcode) {
 	qrcode.data[len(qrcode.data)-7][len(qrcode.data)-7] = black
 }
 
+func addTimingStrips(qrcode *qrcode) {
+	for i := 7; i < len(qrcode.data)-7; i++ {
+		if i%2 == 1 {
+			qrcode.data[6][i] = white
+			qrcode.data[i][6] = white
+		} else {
+			qrcode.data[6][i] = black
+			qrcode.data[i][6] = black
+		}
+	}
+}
 func newQrCode(len int) qrcode {
 	qrCodeSize := 25
 	qrcode := qrcode{
@@ -74,13 +85,7 @@ func newQrCode(len int) qrcode {
 
 	addAlignmentPattern(&qrcode)
 
-	for i := 7; i < qrCodeSize-7; i++ {
-		if i%2 == 1 {
-			qrcode.data[6][i] = white
-		} else {
-			qrcode.data[6][i] = black
-		}
-	}
+	addTimingStrips(&qrcode)
 
 	return qrcode
 
