@@ -42,8 +42,23 @@ func addFinderPattern(qr *qrcode) {
 		}
 	}
 }
+
+func addAlignmentPattern(qrcode *qrcode) {
+
+	for i := 0; i < 5; i++ {
+		for j := 0; j < 5; j++ {
+			if i == 0 || j == 0 || i == 4 || j == 4 {
+				qrcode.data[len(qrcode.data)-9+i][len(qrcode.data)-9+j] = black
+			} else {
+				qrcode.data[len(qrcode.data)-9+i][len(qrcode.data)-9+j] = white
+			}
+		}
+	}
+	qrcode.data[len(qrcode.data)-7][len(qrcode.data)-7] = black
+}
+
 func newQrCode(len int) qrcode {
-	qrCodeSize := 21
+	qrCodeSize := 25
 	qrcode := qrcode{
 		data: make([][]color, qrCodeSize),
 	}
@@ -57,11 +72,27 @@ func newQrCode(len int) qrcode {
 
 	addFinderPattern(&qrcode)
 
+	addAlignmentPattern(&qrcode)
+
+	for i := 7; i < qrCodeSize-7; i++ {
+		if i%2 == 1 {
+			qrcode.data[6][i] = white
+		} else {
+			qrcode.data[6][i] = black
+		}
+	}
+
 	return qrcode
 
 }
+
 func renderQRCode(qr qrcode) {
+	for i := 0; i < len(qr.data)+2; i++ {
+		fmt.Printf(whiteColor + "██" + defaultColor)
+	}
+	fmt.Println()
 	for _, row := range qr.data {
+		fmt.Printf(whiteColor + "██" + defaultColor)
 		for _, col := range row {
 			if col == black {
 				fmt.Printf(blackColor + "██" + defaultColor)
@@ -69,7 +100,12 @@ func renderQRCode(qr qrcode) {
 				fmt.Printf(whiteColor + "██" + defaultColor)
 			}
 		}
+		fmt.Printf(whiteColor + "██" + defaultColor)
 		fmt.Println()
+	}
+	for i := 0; i < len(qr.data)+2; i++ {
+		fmt.Printf(whiteColor + "██" + defaultColor)
+
 	}
 }
 
