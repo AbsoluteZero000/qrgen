@@ -12,24 +12,24 @@ Clone the repository and build the tool:
 
 ```bash
 git clone <repository-url>
-cd qrcodegen-cli
-go build -o qrcodegen
+cd qrgen
+go build -o qrgen
 ```
 
 Ensure the binary is in your PATH for easy access:
 
 ```bash
-sudo mv qrcodegen /usr/local/bin
+sudo mv qrgen /usr/local/bin
 ```
 
 ## Usage
 ```bash
-qrcodegen [text to encode]
+qrgen [text to encode]
 ```
 
 ### Example:
 ```bash
-qrcodegen "Hello, World!"
+qrgen "Hello, World!"
 ```
 
 This command will generate a QR code representing the text "Hello, World!" and output it to your terminal or save it as a file (based on your implementation).
