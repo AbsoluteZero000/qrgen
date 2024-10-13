@@ -1,0 +1,1 @@
+- add two ways of rendering 2 pixels per ascii character or 1 pixel per 2 ascii characters (-b option to switch to 1 pixel per 2 ascii character)

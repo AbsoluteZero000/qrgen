@@ -63,11 +63,11 @@ func addAlignmentPattern(qrcode *qrcode) {
 func addTimingStrips(qrcode *qrcode) {
 	for i := 7; i < len(qrcode.data)-7; i++ {
 		if i%2 == 1 {
-			qrcode.data[6][i] = white
-			qrcode.data[i][6] = white
+			qrcode.data[7][i] = white
+			qrcode.data[i][7] = white
 		} else {
-			qrcode.data[6][i] = black
-			qrcode.data[i][6] = black
+			qrcode.data[7][i] = black
+			qrcode.data[i][7] = black
 		}
 	}
 }
@@ -120,11 +120,71 @@ func addLength(dataLength int, qrcode *qrcode) {
 	}
 }
 
-func addData(data string, qrcode *qrcode) {
+func toBitString(data string) string {
 
+	result := ""
+
+	for i := 0; i < len(data); i++ {
+		result += fmt.Sprintf("%08b", data[i])
+	}
+
+	return result
+}
+
+func addData(data string, qrcode *qrcode) {
+	// bitArray := toBitString(data)
+	// counter := 0
+	// totalCells := len(qrcode.data) * len(qrcode.data)
+
+	// for j := len(qrcode.data) - 1; j >= 0; j -= 2 {
+	// 	for i := len(qrcode.data) - 1; i >= 0; i-- {
+	// 		if qrcode.data[i][j] != uncolored {
+	// 			continue
+	// 		}
+	// 		if counter < len(bitArray) {
+	// 			if bitArray[counter] == '1' {
+	// 				qrcode.data[i][j] = black
+	// 			} else {
+	// 				qrcode.data[i][j] = white
+	// 			}
+	// 		} else {
+	// 			// If we've used all data bits, fill with alternating pattern
+	// 			qrcode.data[i][j] = black
+	// 			if counter%2 == 0 {
+	// 				qrcode.data[i][j] = white
+	// 			}
+	// 		}
+	// 		counter++
+	// 	}
+	// 	if j > 0 {
+	// 		for i := len(qrcode.data) - 1; i >= 0; i-- {
+	// 			if qrcode.data[i][j-1] != uncolored {
+	// 				continue
+	// 			}
+	// 			if counter < len(bitArray) {
+	// 				if bitArray[counter] == '1' {
+	// 					qrcode.data[i][j-1] = black
+	// 				} else {
+	// 					qrcode.data[i][j-1] = white
+	// 				}
+	// 			} else {
+	// 				// If we've used all data bits, fill with alternating pattern
+	// 				qrcode.data[i][j-1] = black
+	// 				if counter%2 == 0 {
+	// 					qrcode.data[i][j-1] = white
+	// 				}
+	// 			}
+	// 			counter++
+	// 		}
+	// 	}
+	// 	if counter >= totalCells {
+	// 		return
+	// 	}
+	// }
 }
 
 func NewQrCode(data string) qrcode {
+
 	qrCodeSize := 25
 	qrcode := qrcode{
 		data: make([][]color, qrCodeSize),
@@ -152,7 +212,7 @@ func NewQrCode(data string) qrcode {
 
 	addLength(len(data), &qrcode)
 
-	addData(data, &qrcode)
+	// addData(data, &qrcode)
 
 	return qrcode
 }
